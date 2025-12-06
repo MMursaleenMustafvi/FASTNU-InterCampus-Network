@@ -82,6 +82,4 @@ Used for:
 
 This project blends **networking, distributed systems, and system design**, making it perfect for students or professionals looking to strengthen both their networking and programming skills.
 
-If you'd like to explore or reuse the project, you can check the GitHub repository in the description.
 
-..
