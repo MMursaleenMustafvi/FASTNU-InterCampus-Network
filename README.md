@@ -1,85 +1,108 @@
-# Building-a-Multi-Campus-Communication-System-with-C-C-Sockets-and-Cisco-Packet-Tracer
-
-Modern universities often operate across multiple cities, creating the need for seamless communication between campuses. To simulate this concept, I built a **nationwide multi-campus communication system** that combines **network design** and **application development** into one integrated project.
-
-
-## 🌐 Part 1 — Designing the WAN Across Pakistan
-
-The goal was to connect six FAST-NUCES campuses through a reliable and scalable WAN. I used **Cisco Packet Tracer** to design a mesh-based backbone topology ensuring redundancy and high availability.
-
-### Key Highlights:
-
-* **Mesh Topology:** Multiple redundant paths between backbone routers
-* **Dynamic Routing (RIP v2):** Automatic propagation of routes across campuses
-* **DHCP:** Automated IP distribution within each campus
-* **Department-Level Network Segmentation:** Faculty, Admin, Student Labs, Server Rooms
-* **Serial  Links:** Simulated real-world WAN connectivity
-
-Each campus operated as a combination of VLANs and subnets, uniquely addressable within the IP hierarchy.
+# FAST-NU Inter-Campus Communication System  
+A real-time communication system connecting all FAST-NU campuses using C++ TCP and UDP socket programming.
 
 ---
 
-## 💻 Part 2 — Implementing the Multi-Campus Messaging System in C/C++
-
-To simulate communication between campuses, I built a multi-client system using **TCP and UDP sockets**.
-
-### ✔ TCP (Reliable)
-
-Used for:
-
-* Campus Client authentication
-* Direct messages between departments across campuses
-
-### ✔ UDP (Connectionless)
-
-Used for:
-
-* Heartbeat status packets
-* System-wide announcements
-* Low-overhead campus presence updates
+## 🚀 Overview
+This project implements a **central server** that allows multiple campuses (Lahore, Karachi, Islamabad, Peshawar, CFD, Multan) to communicate securely and efficiently.  
+It supports **real-time messaging**, **broadcasts**, **authentication**, and **UDP heartbeat status tracking**.
 
 ---
 
-## 🏗 System Architecture
+## 🏗️ System Architecture
 
-### Central Server (Islamabad)
+### **1. TCP Server**
+- Accepts client connections  
+- Verifies campus credentials  
+- Prevents duplicate campus logins  
+- Routes messages between campuses  
+- Handles admin broadcasts  
 
-* Accepts multiple TCP clients
-* Validates campus credentials
-* Routes inter-campus messages
-* Displays real-time heartbeats from all campuses
-* Provides an admin console for broadcasts
+### **2. UDP Heartbeat Server**
+- Receives heartbeat packets every 5 seconds  
+- Monitors online campus presence  
+- Lightweight and non-blocking  
 
-### Campus Clients (LHR, KHI, PSH, CFD, MULTAN)
-
-* Connect to the server using TCP
-* Send & receive cross-campus messages
-* Periodically send UDP “online” signals
-* Provide a simple console UI for department users
-
----
-
-## 🧪 Testing & Validation
-
-* Inter-campus routing verified using `show ip route`
-* DHCP pools correctly assigned IPs across VLANs
-* Message routing confirmed through TCP relay
-* UDP broadcasts received campus-wide
+### **3. Client**
+- Connects via TCP  
+- Sends direct messages like:  
+  ```
+  Karachi:Hello from Lahore!
+  ```
+- Sends heartbeats using UDP  
+- Displays formatted messages, system notifications & server broadcasts
 
 ---
 
-## 🎓 What I Learned
-
-* Designing multi-site WANs
-* Implementing hybrid TCP/UDP architectures
-* Managing concurrent TCP clients using threads
-* Benefits & tradeoffs of connection-oriented vs connectionless protocols
-* Practical system modeling that applies to real universities, enterprises, or government institutions
+## ⚡ Features
+- ✔ **Multi-threaded server**—each TCP connection handled by a dedicated thread  
+- ✔ **Secure campus authentication**  
+- ✔ **Direct campus-to-campus messaging**  
+- ✔ **Server-side broadcast support**  
+- ✔ **UDP heartbeat monitoring**  
+- ✔ **Colored CLI with formatted messages**  
+- ✔ **Graceful connection closing**  
 
 ---
 
-## 👀 Final Thoughts
+## 🔧 Technologies Used
+- C++17  
+- POSIX Sockets (TCP + UDP)  
+- Multithreading (`std::thread`)  
+- Mutex locks for synchronization  
+- ANSI escape codes for UI  
 
-This project blends **networking, distributed systems, and system design**, making it perfect for students or professionals looking to strengthen both their networking and programming skills.
+---
 
+## 📂 Project Structure
+```
+/server
+   server.cpp
+
+/client
+   client.cpp
+```
+
+---
+
+## ▶️ How to Run
+
+### **Start Server**
+```
+g++ server.cpp -pthread -o ser
+./ser
+```
+
+### **Start Client**
+```
+g++ client.cpp -pthread -o cli
+./cli
+```
+
+---
+
+## 📡 Message Format
+```
+TargetCampus:Your message here
+```
+
+Example:
+```
+Islamabad:Meeting at 3 PM
+```
+
+---
+
+## 🖋️ Author
+**Muhammad Mursaleen Mustafvi**
+FAST-National University of Computer and Emerging Sciences  
+2024–2025
+
+---
+
+
+
+## ⭐ Feedback & Contributions  
+Pull requests are welcome!  
+If you have suggestions for improvements or additional features, feel free to open an issue.
 
